@@ -1,0 +1,38 @@
+<!-- Create a folder named templates and put this file inside it -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scene Text Recognition with Translation</title>
+</head>
+<body>
+  <h2>Upload an Image to Extract and Translate Text</h2>
+  <form method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" required>
+    <button type="submit">Extract Text</button>
+  </form>
+
+  {% if output_image %}
+    <h3>Detected Text with Bounding Boxes:</h3>
+    <img src="{{ url_for('static', filename='output.jpg') }}" alt="Output Image" style="max-width:500px;">
+  {% endif %}
+
+  {% if extracted_text and translated_text %}
+<h3>Extracted and Translated Text:</h3>
+<table border="1" cellpadding="5">
+  <tr>
+    <th>Original Text</th>
+    <th>Translated Text (English)</th>
+  </tr>
+  {% for i in range(extracted_text|length) %}
+  <tr>
+    <td>{{ extracted_text[i] }}</td>
+    <td>{{ translated_text[i] }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+</body>
+</html>
